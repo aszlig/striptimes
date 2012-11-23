@@ -1,13 +1,19 @@
 CC = gcc
-SOURCES = striptimes.c
-CFLAGS = -Wall -Wextra -ansi -pedantic-errors -O3 -s
+SOURCES = patch.c
+CFLAGS = -Wall -Wextra -std=c99 -pedantic-errors -O3
+LDFLAGS = -s
+
+PROGRAMS = striptimes
 
 all: striptimes
 
-striptimes: $(SOURCES)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+%.o: %.c %.h
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(PROGRAMS): %: %.c $(SOURCES:.c=.o)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 clean:
-	$(RM) striptimes
+	$(RM) $(PROGRAMS) $(SOURCES:.c=.o)
 
 .PHONY: clean
