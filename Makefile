@@ -1,6 +1,7 @@
 CC = gcc
 SOURCES = patch.c
-CFLAGS = -Wall -Wextra -std=c99 -pedantic-errors -O3
+CSTD = -ansi
+CFLAGS = -Wall -Wextra $(CSTD) -pedantic-errors -O3
 LDFLAGS = -s
 
 PROGRAMS = striptimes
