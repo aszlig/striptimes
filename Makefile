@@ -4,17 +4,17 @@ CSTD = -ansi
 CFLAGS = -Wall -Wextra $(CSTD) -pedantic-errors -O3
 LDFLAGS = -s
 
-PROGRAMS = striptimes
+PROGRAMS = striptimes test
 
 all: striptimes
 
-%.o: %.c %.h
-	$(CC) $(CFLAGS) -c -o $@ $<
+check: test; ./test
 
+test: private CSTD = -std=c99 -D_XOPEN_SOURCE=500
 $(PROGRAMS): %: %.c $(SOURCES:.c=.o)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 clean:
 	$(RM) $(PROGRAMS) $(SOURCES:.c=.o)
 
-.PHONY: clean
+.PHONY: all clean check
